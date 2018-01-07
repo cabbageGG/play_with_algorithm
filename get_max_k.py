@@ -5,6 +5,17 @@
 import time, random
 from test__all_sort import quick_sort
 
+"""
+借助快速排序的partition函数，与递归思想解决求解数组中第k大的数。
+算法思想：
+1、partition函数，将数组的第一个元素放置在数组正确的排序位置，并返回该位置的索引。
+2、将partition函数返回的索引对应的元素与目标元素比较，若大，则要寻找的元素在索引的右边；若小，则要寻找的元素在索引的左边。
+3、对目标元素，进行递归的partition操作查找，知道返回的索引对应的元素等于目标元素，退出。
+ 
+算法复杂度：O(n)
+注：n + n/2 + n/4 ....+0 极限等于 2n。所以算法复杂度为O(n)
+"""
+
 def genRandomArr(length,min,max):
     return [random.randint(min,max) for i in range(length)]
 
