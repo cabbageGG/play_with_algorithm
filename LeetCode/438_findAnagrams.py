@@ -45,6 +45,7 @@ class Solution:
                 tem_dict[i] = tem_dict[i] + 1
             else:
                 tem_dict[i] = 1
+        sort_p = "".join(sorted(p))
         i = lp-1
         while i < ls:
             if s[i] in tem_dict:
