@@ -188,6 +188,19 @@ def bubble_sort(list):
 #         if last_change_pos_tem is 0:
 #             break        
 
+#自底向上的归并排序
+def merge_sort2(list):
+    length = len(list)
+    k = 1
+    while k<=length:
+        for i in range(0,length,2*k):
+            l = i
+            r = min(length-1,i+2*k-1)
+            m = min(length-1,i + k -1)
+            merge(list,l,m,r)
+        k = k * 2
+        
+#自顶向下的归并排序
 def merge_sort(list):
     l = len(list)
     _merge_sort(list,0,l-1)
@@ -300,6 +313,7 @@ if __name__ == "__main__":
     a6 = a[:]
     a7 = a[:]
     a8 = a[:]
+    a8_2 = a[:]
     a9 = a[:]
     a10 = a[:]
     a11 = a[:]
@@ -367,6 +381,13 @@ if __name__ == "__main__":
     cost_time = end_time - start_time
     print(isSorted(a8))
     print("merge_sort耗时:" + str(cost_time))
+
+    start_time = time.time()
+    merge_sort2(a8_2)
+    end_time = time.time()
+    cost_time = end_time - start_time
+    print(isSorted(a8_2))
+    print("merge_sort2耗时:" + str(cost_time))
 
     start_time = time.time()
     quick_sort(a9)
