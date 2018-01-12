@@ -21,25 +21,45 @@ class Solution:
             lenght += 1
             cur = cur.next
         k = 1
+
+        #构造虚拟节点
+        dmmyNode = ListNode(0)
+        dmmyNode.next = head
+
         while k<=lenght:
-            #将链表分成长度为k的多个链表,分别排序后，重新连接为一条链表
+            #将链表分成长度为k的多个链表,合并排序后，重新连接为一条链表
+            #具体为：每次截取两个连续的长度为k的链表，合并排序后，放回原链表，
+            #       继续取下两个长度为k的链表，重复操作，直到结尾。
             tem = head
+            pre = dmmyNode
+            head1,last1,head2,last2 = None,None,None,None
             count = 0  #自己创建索引！！！！
             while tem:
-                if count % (2*k):
-                    l1 = tem #找到l1的头结点，同时断开与前面节点的连接。并保存前面的节点。pre
-                if count:
-                    #断开l1的尾节点
-                    #同时找到l2的头结点
-                    l2 = 1
-                if count:
-                    #断开l2的尾节点,存储尾节点的下一个节点 next
-                    #merge(l1,l2)
-                    #将新的链表的尾节点，接上前面保存的next节点。
-                    #并将新的链表的头结点与开始保存的pre节点连接。
-                    l1 =3 
-                #继续循环
-            pass
+                if count % k == 0: #找到一个头结点
+                    if not head1:
+                        head1 = tem
+                    else:
+                        head2 = tem
+                if count % k == k - 1:#找到一个尾节点
+                    if not last1:
+                        last1 = tem
+                        tem_next = last1.next
+                        last1.next = None #尾部断开原链表
+                    else:
+                        last2 = tem
+                        tem_next = last2.next
+                        last2.next = None #尾部断开原链表
+                if head1 and head2:
+                    newHead,newLast = self.mergeTwoLists(head1,last1,head2,last2)
+                    pre.next = newHead
+                    newLast.next = tem_next
+                    pre = newLast
+                    head1,head2 = None,None
+                    last1,last2 = None,None
+                tem = tem_next
+            if head1:
+                pre.next = head1
+            
 
 #         #自底向上的归并排序
 # def merge_sort2(list):
@@ -54,14 +74,16 @@ class Solution:
 #         k = k * 2
 
 
-    def mergeTwoLists(self, l1, l2):
+    def mergeTwoLists(self, l1,last1,l2,last2):
         """
         :type l1: ListNode
         :type l2: ListNode
         :rtype: ListNode
         """
         if not l1:
-            return l2
+            return l2,last2
+        if not l2:
+            return l1,last1
         #将l2合并到l1中
         head = l1
         pre1 = None
@@ -81,4 +103,8 @@ class Solution:
                 l1 = l1.next
         if not l1:
             pre1.next = l2
-        return head
+        #遍历寻找最后一个节点
+        while pre1:
+            last = pre1
+            pre1 = pre1.next
+        return head,last
