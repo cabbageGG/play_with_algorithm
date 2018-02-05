@@ -1,2 +1,2 @@
 # play_with_algorithm
-使用python来实现一些算法
+使用python来实现一些算法，leetcode练习
