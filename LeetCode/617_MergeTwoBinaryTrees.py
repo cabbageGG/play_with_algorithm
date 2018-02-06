@@ -29,6 +29,8 @@ class Solution:
         :type t2: TreeNode
         :rtype: TreeNode
         """
+        if not t1:
+            return t2
         head = t1
         self.merge(t1,t2)
         return head
@@ -36,16 +38,15 @@ class Solution:
     def merge(self,t1,t2):
         if t1 and t2:
             t1.val += t2.val
+            if not t1.left:
+                t1.left = t2.left
+                t2.left = None
+            if not t1.right:
+                t1.right = t2.right
+                t2.right = None
             self.merge(t1.left,t2.left)
-            self.merge(t1.right,t2.right) 
-        elif not t1 and t2:
-            t1 = t2
-            self.merge(t1.left,None)
-            self.merge(t1.right,None)
-        elif t1 and not t2:
-            self.merge(t1.left,None)
-            self.merge(t1.right,None)
-        elif not t1 and not t2:
+            self.merge(t1.right,t2.right)
+        else:
             return
 
 
