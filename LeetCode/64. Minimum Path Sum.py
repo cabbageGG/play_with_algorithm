@@ -53,7 +53,3 @@ class Solution:
 # a = Solution()
 # input = [[1,3,1],[1,5,1],[4,2,1]]
 # a.minPathSum(input)
-a = [[0 if col!=0 else 8 for col in range(3)] for row in range(4)]
-print(a)
-a[0] = [1,2,3]
-print(a)
